@@ -26,6 +26,11 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 * compose `snakemake` for multiple targets
   * `$ snakemake -np mapped_reads/{A,B}.bam`
 
+* Snakemake automatically creates missing directories
+
+* To let the **shell** access defined **wildcards**, use the `wildcards` object ( `{wildcards.sample}` )  for each wildcard
+
+
 ---
 
 # Tutorial
@@ -45,7 +50,7 @@ rule bwa_map:
                 "bwa mem {input} | samtools view -Sb - > {output}"
 ```
 
-Since the rule `bwa_map` has 2 `input` files, they will be **concatenated by whitespace in the `shell` directive**
+Since the rule `bwa_map` has 2 `input` files, they will be **concatenated by whitespace in the `shell` directive** 
 
 ## Step 2
 
@@ -64,3 +69,23 @@ rule bwa_map:
                 "bwa mem {input} | samtools view -Sb - > {output}"
 ```
 
+## Step 3
+
+* Sorting reads
+
+This will make a new rule that takes as input the output from the `bwa_map` rule 
+
+By running `$ snakemake -np sorted_reads/B.bam` it will first run the rule `bwa_map` and then the rule `samtools_sort` 
+
+```
+rule samtools_sort:
+        input:
+                "mapped_reads/{sample}.bam"
+        output:
+                "sorted_reads/{sample}.bam"
+        shell:
+                "samtools sort -T sorted_reads/{wildcards.sample} "
+                "-O bam {input} > {output}"
+```
+
+Snakemake allows to access wildcards in the shell command via the `wildcards` object that has an attribute with the value for each wildcard
