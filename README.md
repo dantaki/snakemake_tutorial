@@ -157,3 +157,28 @@ rule bcftools_call:
 ## Step 6
 
 * Adding custom scripts
+
+Use the `script` directive to use custom scripts
+
+Script paths are always relative to the referring Snakefile.
+
+In the script, all properties of the rule like `input`, `output`, `wildcards` are available as attributes of a global `snakemake` object.
+
+Script logic is separate from workflow logic. **Can be shared between workflows**
+
+Best practice: use `script` whenever an inline code block would have more than a few lines of code
+
+R scripts can be used. S4 object named `snakemake`
+  * `snakemake@input[[1]]`
+
+
+```
+rule plot_quals:
+        input:
+                "calls/all.vcf"
+        output:
+                "plots/quals.svg"
+        script:
+                "scripts/plot-quals.py"
+```
+
