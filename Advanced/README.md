@@ -60,6 +60,42 @@ rule bcftools_call:
 
 ```
 
+Example from Gleeson WGS pipeline
+
+`/projects/ps-gleesonlab3/lil067/Gleesonlab/snakefiles/HLI_WGS/snake_conf.yaml`
+
+```
+{
+
+        #LIST OF SAMPLES TO BE ANALYZED
+        "sample_list" : "/projects/ps-gleesonlab3/lil067/Gleesonlab/projects/HLI_WGS/samples_sorted.list",
+
+        #INTERVALS
+        #WGS experiment do not use the interval
+        #"interval_list" : "/home/lil067/references/bedfiles/Broad10_11/exome_calling_regions.v1.interval_list",
+
+        #REFERENCE FILES - HLI version hg38
+        "reference" : "/projects/ps-gleesonlab3/lil067/references/hg38/HLI_version/HLI_hg38.fa",
+
+        #OUTPUT SPACE DEFINITION
+        "realign_output_dir" : "/projects/ps-gleesonlab3/lil067/data/HLI_WGS/realigned",
+        "combine_output_dir" : "/projects/ps-gleesonlab/combinedgvcfs",
+        "vcf_output_dir" : "/projects/ps-gleesonlab/vcfs",
+
+        #LOG PATH DEFINITION
+        "log_path" : "/home/lil067/HLI_WGS/logs",
+        "benchmark_path" : "/home/lil067/HLI_WGS/benchmarks",
+
+        #SOFTWARE USED:
+        "samtools" : "/projects/ps-gleesonlab3/lil067/resources/samtools/samtools/1.3.1/bin/samtools",
+        "picard" : "/projects/ps-gleesonlab3/lil067/resources/picard.jar",
+        "bwa" : "/projects/ps-gleesonlab3/lil067/resources/miniconda3/bin/bwa",
+        "gatk" : "/projects/ps-gleesonlab3/lil067/resources/GATK/GATK3.7/GenomeAnalysisTK.jar",
+
+}
+```
+
+
 ---
 
 # Input Functions
