@@ -30,6 +30,15 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 
 * To let the **shell** access defined **wildcards**, use the `wildcards` object ( `{wildcards.sample}` )  for each wildcard
 
+* Snakemake can aggregate files with `expand(<dir/{sample}.bam>, sample=SAMPLES)`
+  * a list of files is obtained given the pattern of `"dir/{sample}.bam"` and a given list of samples `SAMPLES`
+  * `expand("fastq/{sample}.{pair}.bam", sample=SAMPLES, pair=[1,2])`
+  * Since snakemake is **top-down** define the list of samples at the **top** of the file
+    * `SAMPLES = ["A", "B"]`
+
+* Names can be specified for input or output
+  * `fa="data/genome.fa"`
+  * `samtools mpileup -g -f {input.fa}`
 
 ---
 
@@ -73,9 +82,9 @@ rule bwa_map:
 
 * Sorting reads
 
-This will make a new rule that takes as input the output from the `bwa_map` rule 
+This will make a new rule that takes as input the output from the `bwa_map` rule
 
-By running `$ snakemake -np sorted_reads/B.bam` it will first run the rule `bwa_map` and then the rule `samtools_sort` 
+By running `$ snakemake -np sorted_reads/B.bam` it will first run the rule `bwa_map` and then the rule `samtools_sort`
 
 ```
 rule samtools_sort:
@@ -89,3 +98,62 @@ rule samtools_sort:
 ```
 
 Snakemake allows to access wildcards in the shell command via the `wildcards` object that has an attribute with the value for each wildcard
+
+## Step 4
+
+* Visualizing DAG of jobs
+
+Add an index step
+
+```
+rule samtools_index:
+        input:
+                "sorted_reads/{sample}.bam"
+        output:
+                "sorted_reads/{sample}.bam.bai"
+        shell:
+                "samtools index {input}"
+```
+
+Take a look at the DAG of jobs with `$ snakemake --dag sorted_reads/{A,B}.bam.bai | dot -Tsvg > dag.svg`
+
+## Step 5
+
+* Expanding arguments
+
+`expand()` is a helper function that collects input files
+
+`expand()` can take multiple wildcards
+
+```
+expand("fastq/{sample}.{pair}.fastq", sample=SAMPLES, pair=[1,2])
+```
+
+The list `SAMPLES` would need to be defined at the top of the file.
+
+```
+SAMPLES = ["A", "B"]
+```
+
+Add a rule for joint variant calling
+
+Names can be specified for input or output
+
+
+```
+rule bcftools_call:
+        input:
+                fa="data/genome.fa",
+                bam=expand("sorted_reads/{sample}.bam", sample=SAMPLES),
+                bai=expand("sorted_reads/{sample}.bam.bai", sample=SAMPLES),
+        output:
+                "calls/all.vcf"
+        shell:
+                "samtools mpileup -g -f {input.fa} {input.bam} | "
+                "bcftools call -mv - > {output}"
+
+```
+
+## Step 6
+
+* Adding custom scripts
