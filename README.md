@@ -9,7 +9,7 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 * A Snakemake workflow is defined by specifying rules in a Snakefile
 * **Rules** decompose the workflow into small steps
   * rules contain directives, which are followed by lists of files used or created by rules
-  * example directives: `input`, `output`, `shell`
+  * example directives: `input`, `output`, `shell`, `script`
 
 * `shell` directive is followed by a python string containing a shell command
   * elements of the rule are refer by braces notation (similar to `.format()` )
@@ -39,6 +39,10 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 * Names can be specified for input or output
   * `fa="data/genome.fa"`
   * `samtools mpileup -g -f {input.fa}`
+
+* Rules can be targets, provided the rule has no wildcards
+  * Best practice: have a rule `all` at the top of the workflow
+    * contains all typically desired target files as input
 
 ---
 
@@ -181,4 +185,17 @@ rule plot_quals:
         script:
                 "scripts/plot-quals.py"
 ```
+
+## Step 7
+
+* Target Rule
+
+
+
+```
+rule all:
+        input:
+                "plots/quals.svg"
+```
+                                
 
