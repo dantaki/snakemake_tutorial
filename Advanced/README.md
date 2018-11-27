@@ -199,4 +199,29 @@ __default__:
 
 ---
 
+# Conda Environments
+
+First save environment
+
+```
+$ conda activate bio
+$ conda env export >bio.yaml
+```
+
+in `Snakefile`
+
+
+```
+rule conda_depend:
+        input:
+                "{sample}.bam"
+        output:
+                "{sample}.conda.bam"
+        conda:
+                "bio.yaml"
+        ...
+
+```
+
+---
 
