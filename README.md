@@ -4,14 +4,22 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 
 ---
 
-* [Threads](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#threads)
-* [Config Files](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#config-files)
+* [**Config Files**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#config-files)
+  * define samples, reference files, software, etc
+
 * [**Parameters** (@RG)](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#rule-parameters)
+  * define parameters for commands, such as ReadGroup information
+
+* [**Cluster Execution**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#cluster-execution)
+  * define parameters for submitting jobs to the cluster
+
+* [**Conda Environments**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#conda-environments)
+  * run jobs with specific conda environments
+
 * [Logging](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#logging)
 * [Temporary and Protected Output](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#temporary-and-protected-files)
+* [Threads](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#threads)
 * [Benchmarking](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#benchmarking)
-* [**Cluster Execution**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#cluster-execution)
-* [**Conda Environments**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#conda-environments)
 * [Visualizing Workflows](https://github.com/dantaki/snakemake_tutorial#step-4)
 * [Expanding Arguments](https://github.com/dantaki/snakemake_tutorial#step-5)
 
