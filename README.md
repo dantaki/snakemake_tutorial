@@ -4,6 +4,20 @@ This repository hosts the skeleton code needed for the [Snakemake tutorial](http
 
 ---
 
+* [Threads](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#threads)
+* [Config Files](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#config-files)
+* [**Parameters** (@RG)](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#rule-parameters)
+* [Logging](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#logging)
+* [Temporary and Protected Output](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#temporary-and-protected-files)
+* [Benchmarking](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#benchmarking)
+* [**Cluster Execution**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#cluster-execution)
+* [**Conda Environments**](https://github.com/dantaki/snakemake_tutorial/blob/master/Advanced/README.md#conda-environments)
+* [Visualizing Workflows](https://github.com/dantaki/snakemake_tutorial#step-4)
+* [Expanding Arguments](https://github.com/dantaki/snakemake_tutorial#step-5)
+
+---
+
+
 # Notes
 
 * A Snakemake workflow is defined by specifying rules in a Snakefile
