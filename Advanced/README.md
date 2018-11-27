@@ -78,4 +78,95 @@ rule bwa_map:
                 lambda wildcards: config["samples"][wildcards.sample]
         ...
 ```
+---
+
+# Rule parameters
+
+define arbitrary parameters
+
+```
+rule bwa_map:
+        input:
+                ...
+        params:
+                rg=r"@RG\tID:{sample}\tSM:{sample}"
+        shell:
+                "bwa mem -R '{params.rg}' ... "
+```
+
+---
+
+# Logging
+
+Define log files with the `log` directive.
+
+not subject to rule matching and not cleaned up when a job fails
+
+
+modify shell command to collect `STDERR` output of both `bwa` and `samtools` and
+pipe it into the file referred by `{log}`
+
+** must contain the same wildcards as the output file to avoid collisions **
+
+```
+rule bwa_map:
+  ...
+
+        log:
+                "logs/bwa_mem/{sample}.log"
+        shell:
+                "(bwa mem -R '{params.rg}' ... | "
+                "samtools view -Sb -> {output}) 2> {log}" 
+```
+
+---
+
+# Temporary and Protected Files
+
+Snakemake can mark output files as temporary
+  * deleted once every consuming job has been executed
+
+```
+rule bwa_map:
+        ...
+        
+        output:
+                temp("mapped_reads/{sample}.bam")
+        ...
+
+```
+
+Protect files from accidental deletion or modification
+
+```
+rule samtools_sort:
+        ...
+        
+        output:
+                protected("sorted_reads/{sample}.bam")
+        ...
+```
+
+---
+
+# Benchmarking
+
+Use the `benchmark` directive to measure the wall clock time and memory usage of a job
+
+** must contain the same wildcards as output to avoid collisions **
+
+can repeat benchmarks `benchmark("...", 3)`
+
+
+```
+rule bwa_map:
+        ...
+
+        benchmark:
+                "benchmarks/{sample}.bwa.benchmark.txt"
+        ...
+```
+
+---
+
 
