@@ -169,4 +169,34 @@ rule bwa_map:
 
 ---
 
+# Cluster Execution
+
+```
+$ snakemake --cluster qsub --jobs 100
+```
+
+Each job will be compiled into a shell script that is submitted with the given command (`qsub`)
+
+`--jobs` limits the number of concurrent jobs
+
+Snakemake supports a separate configuration file for execution on a cluster
+
+Parameters in the cluster config file are accessed by the `cluster.*` wildcard
+
+`cluster.yaml`
+
+```
+__default__:
+        n: 1
+        queue: condo
+        e: '{log}.err'
+        o: '{log}.out'
+        time: "48:00:00"
+
+```
+
+`$ snakemake --cluster-config cluster.yaml --cluster "qsub -q {cluster.queue} -n {cluster.n} -W {cluster.time}" `
+
+---
+
 
